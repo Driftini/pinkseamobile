@@ -1,0 +1,65 @@
+// ==UserScript==
+// @name         PinkSeaMobile Userscript
+// @namespace    https://github.com/Driftini/pinkseamobile
+// @version      1.0.0
+// @description  Complementary userscript for my userstyle to improve drawing on PinkSea from mobile devices
+// @author       Driftini (https://github.com/Driftini)
+// @match        https://pinksea.art/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=pinksea.art
+// @grant        none
+// @license      MIT
+// ==/UserScript==
+
+function can_load() {
+    return document.location.href.endsWith("/paint") || document.location.href.endsWith("/paint/");
+}
+
+function load(direct = false) {
+    /*
+     *  "direct" determines whether or not:
+     *      - /paint was loaded through a refresh or from the browser URL bar ()
+     *      - /paint was loaded from another page in PinkSea
+     */
+
+    try {
+        setTimeout(() => {
+            document.getElementById("tegaki-ctrlgrp-layers").setAttribute("tabindex", -1);
+            document.getElementById("tegaki-ctrlgrp-color").setAttribute("tabindex", -1);
+
+            let msg = "The PinkSea mobile userscript should have loaded successfully!"
+            if (!direct)
+                msg += "\n\nUpon closing this message, you will be prompted to enter a canvas size."
+            alert(msg);
+
+            if (!direct)
+                document.querySelector("#tegaki-menu-bar>.tegaki-mb-btn:nth-child(1)").click()
+        }, 500);
+    }
+    catch (e) {
+        alert("The PinkSea mobile userscript has attempted to load, but failed.\n\n" + e);
+    }
+}
+
+(function () {
+    'use strict';
+
+    if (can_load())
+        load(true);
+    else {
+        // Copying the original method to not make the code
+        // freak out over too much recursion
+        let rs = history.replaceState;
+
+        // Allow the script to react to the URL change
+        history.replaceState = function () {
+            rs.apply(history, arguments);
+
+            // really overrelying on setTimeout here
+            setTimeout(() => {
+                if (can_load())
+                    load(false);
+            }, 1000);
+        };
+    }
+})();
+

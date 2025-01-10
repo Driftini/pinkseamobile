@@ -1,0 +1,377 @@
+/* ==UserStyle==
+@name         PinkSeaMobile Userstyle
+@namespace    github.com/Driftini/pinkseamobile
+@description  Userstyle to improve drawing on PinkSea from mobile devices.
+@author       Driftini <yurisilveos741@gmail.com> (https://github.com/Driftini)
+@homepageURL  https://github.com/Driftini
+@supportURL   https://github.com/Driftini/issues
+@version      1.0.0
+@license      MIT
+@preprocessor stylus
+==/UserStyle== */
+@-moz-document regexp("https?://pinksea\.art/paint.*") {
+	@import "assets";
+
+	:root {
+		--color-transparentBg: #0002;
+		--color-transparentHeader: #fff3;
+		--color-brightBg: #ddd;
+		--color-layerSelected: #5af5;
+		--color-layerActive: #5afa;
+
+		--border-transparent: 1px solid var(--color-transparentBg);
+		--border-bright: var(--border-transparent);
+
+		--bshadow-layerSelected: 0 0 0 1px #07f3, inset 0 0 0 1px #fff5;
+		--bshadow-layerActive: 0 0 0 1px #07f7, inset 0 0 0 1px #fffa;
+	}
+
+	#tegaki {
+		grid-template-columns: 0 1fr 0;
+		grid-template-rows: 0 1fr 0;
+
+		&>&-tools-cnt,
+		&>&-menu-cnt>&-menu-bar,
+		&-ctrlgrp-zoom,
+		&-ctrlgrp-size,
+		&-ctrlgrp-alpha,
+		&-ctrlgrp-flow {
+		    background-color: var(--color-transparentBg);
+		    border: var(--border-transparent);
+		}
+
+		&>&-tools-cnt,
+		&>&-menu-cnt>&-menu-bar,
+		&-ctrlgrp-zoom,
+		&-ctrlgrp-size,
+		&-ctrlgrp-alpha,
+		&-ctrlgrp-flow,
+		&-ctrlgrp-color,
+		&-ctrlgrp-layers {
+		    position: fixed;
+
+		    padding: 0;
+
+		    z-index: 100;
+		}
+
+		&>&-menu-cnt>&-menu-bar {
+		    top: 8px;
+		    left: 8px;
+
+		    >.tegaki-mb-btn {
+		        font-size: 0;
+
+		        &::after {
+		            display: inline-block;
+
+		            width: 16px;
+		            height: 16px;
+
+		            padding-top: 4px;
+		        }
+
+		        &:nth-child(1)::after {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/blue-document--plus.png);
+		            content: $asset-file-new;
+		        }
+
+		        &:nth-child(2)::after {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/disk-return.png);
+		            content: $asset-file-save;
+		        }
+
+		        &:nth-child(3)::after {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/arrow-circle-225-left.png);
+		            content: $asset-file-undo;
+		            filter: hue-rotate(180deg);
+		        }
+
+		        &:nth-child(4)::after {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/arrow-circle-315.png);
+		            content: $asset-file-redo;
+		        }
+
+		        &:nth-child(5)::after {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/cross-button.png);
+		            content: $asset-file-quit;
+		        }
+
+		        &:nth-child(6)::after {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/tick-button.png);
+		            content: $asset-file-done;
+		        }
+		    }
+		}
+
+		&>&-tools-cnt {
+		    top: 42px;
+		    left: 8px;
+
+		    >#tegaki-tools-grid {
+		        display: flex;
+		    }
+
+		    .tegaki-tool-btn {
+		        padding: 0 6px;
+
+		        &, &::before {
+		            width: 16px;
+		            height: 24px;
+		        }
+
+		        &::before {
+		            transform: translateY(-3px);
+		            filter: saturate(.5) brightness(.7);
+		        }
+
+		        &.tegaki-tool-active:before {
+		            filter: none
+		        }
+		    }
+
+		    #tegaki-tool-btn {
+		        &-pencil::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/pencil.png);
+		            content: $asset-tools-pencil;
+		        }
+
+		        &-pen::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/paint-brush.png);
+		            content: $asset-tools-pen;
+		        }
+
+		        &-airbrush::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/spray.png);
+		            content: $asset-tools-airbrush;
+		        }
+
+		        &-bucket::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/paint-can.png);
+		            content: $asset-tools-bucket;
+		        }
+
+		        &-tone::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/gradient.png);
+		            content: $asset-tools-tone;
+		        }
+
+		        &-pipette::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/pipette.png);
+		            content: $asset-tools-pipette;
+		        }
+
+		        &-blur::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/water.png);
+		            content: $asset-tools-blur;
+		        }
+
+		        &-eraser::before {
+		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/eraser.png);
+		            content: $asset-tools-eraser;
+		        }
+		    }
+		}
+
+		&-ctrlgrp-zoom {
+		    top: 8px;
+		    left: 186px;
+
+		    .tegaki-ctrlgrp-title,
+		    #tegaki-zoom-lbl {
+		        display: none;
+		    }
+
+		    .tegaki-ui-btn::before {
+		        display: inline-block;
+
+		        width: 16px;
+		        height: 16px;
+
+		        padding: 3px 6px;
+		    }
+
+		    #tegaki-zoomin-btn::before {
+		        //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/magnifier-zoom-in.png);
+		        content: $asset-zoom-in;
+		    }
+
+		    #tegaki-zoomout-btn::before {
+		        //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/magnifier-zoom-out.png);
+		        content: $asset-zoom-out;
+		    }
+		}
+
+		&-ctrlgrp-color,
+		&-ctrlgrp-layers {
+		    bottom: -318px;
+
+		    width: 50%;
+		    height: 340px;
+
+		    margin: 0;
+
+		    background: var(--color-brightBg);
+		    border: var(--border-bright);
+
+		    transition: bottom .2s ease-in-out;
+
+		    &:focus-within {
+		        bottom: 0;
+		    }
+
+		    .tegaki-ctrlgrp-title::before {
+		        //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/arrow-090-medium.png);
+		        content: $asset-flyout-indicator;
+
+		        display: inline-block;
+
+		        margin-right: 4px;
+
+		        transform: translateY(2px);
+		        filter: saturate(0) contrast(2) brightness(.6);
+		    }
+		}
+
+		&-ctrlgrp-color {
+		    left: -1px;
+
+		    #tegaki-color-ctrl {
+		        padding: 4px 8px;
+		    }
+
+		    .tegaki-color-grid-15,
+		    .tegaki-color-grid-20 {
+		        grid-template-columns: repeat(auto-fill, 30px);
+		        grid-auto-rows: 30px;
+		        justify-content: center;
+		    }
+		}
+
+		&-ctrlgrp-layers {
+		    left: 50%;
+
+		    #tegaki-layers-grid {
+		        height: calc(100% - 79px);
+		        resize: none;
+
+		        margin: 0 3px 0 2px;
+
+		        background-color: var(--color-transparentBg);
+		        border: var(--color-transparentBg);
+		        
+		        .tegaki-layers-cell-s {
+		            background-color: var(--color-layerSelected);
+		            box-shadow: var(--bshadow-layerSelected);
+		        }
+
+		        .tegaki-layers-cell-a {
+		            background-color: var(--color-layerActive);
+		            box-shadow: var(--bshadow-layerActive);
+		        }
+		    }
+
+		    #tegaki-layers-ctrl {
+		        .tegaki-icon {
+		            padding: 4px 6px;
+
+		            &::before {
+		                height: 16px;
+		                width: 16px;
+		            }
+
+		            &.tegaki-plus::before {
+		                //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/layer--plus.png);
+		                content: $asset-layers-new;
+		            }
+
+		            &.tegaki-minus::before {
+		                //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/layer--minus.png);
+		                content: $asset-layers-delete;
+		            }
+
+		            &.tegaki-level-down::before {
+		                //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/arrow-stop-270.png);
+		                content: $asset-layers-mergedown;
+		                filter: hue-rotate(180deg);
+		            }
+
+		            &.tegaki-up-open::before {
+		                //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/arrow-090.png);
+		                content: $asset-layers-moveup;
+		            }
+
+		            &.tegaki-down-open::before {
+		                //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/arrow-270.png);
+		                content: $asset-layers-movedown;
+		            }
+		        }
+		    }
+		}
+
+		&-ctrlgrp-size,
+		&-ctrlgrp-alpha,
+		&-ctrlgrp-flow {
+		    right: 8px;
+
+		    width: 31%;
+		}
+
+		&-ctrlgrp-size {
+		    top: 8px;
+		}
+
+		&-ctrlgrp-alpha {
+		    top: 56px;
+		}
+
+		&-ctrlgrp-flow {
+		    top: 105px;
+		}
+		
+		&-status-cnt {
+		    grid-area: unset;
+
+		    >div {
+		        padding: 0 !important;
+
+		        font-size: 0; 
+		    }
+		    
+		    &::after {
+		        content: "Icons by Yusuke Kamiyamane.\A(https://p.yusukekamiyamane.com)";
+
+		        position: absolute;
+		        top: 72px;
+		        left: 9px;
+
+		        font-size: 12px;
+		        color: #fff;
+		        text-shadow:
+		            -1px 0px 1px #000,
+		            1px 0px 1px #000,
+		            0px 1px 1px #000,
+		            0 -1px 1px #000;
+		        white-space: pre;
+
+		        opacity: .4;
+		    }
+
+		    &:hover,
+		    &:focus {
+		        &::after {
+		            opacity: 1;
+		        }
+		    }
+		}
+
+		.tegaki-ctrlgrp-title {
+		    background-color: var(--color-transparentHeader);
+		}
+
+		.tegaki-disabled {
+		    opacity: .75;
+		    filter: saturate(0);
+		}
+	}
+}
