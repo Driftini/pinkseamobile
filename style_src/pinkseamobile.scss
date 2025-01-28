@@ -71,6 +71,10 @@
 		            padding-top: 4px;
 		        }
 
+		        &::after {
+		        	image-rendering: pixelated;
+		        }
+
 		        &:nth-child(1)::after {
 		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/blue-document--plus.png);
 		            content: $asset-file-new;
@@ -131,6 +135,8 @@
 		    }
 
 		    #tegaki-tool-btn {
+				image-rendering: pixelated;
+
 		        &-pencil::before {
 		            //content: url(https://p.yusukekamiyamane.com/icon/search/fugue/icon/pencil.png);
 		            content: $asset-tools-pencil;
@@ -189,6 +195,8 @@
 		        height: 16px;
 
 		        padding: 3px 6px;
+
+		        image-rendering: pixelated;
 		    }
 
 		    #tegaki-zoomin-btn::before {
@@ -230,6 +238,8 @@
 
 		        transform: translateY(2px);
 		        filter: saturate(0) contrast(2) brightness(.6);
+
+		        image-rendering: pixelated;
 		    }
 		}
 
@@ -278,6 +288,8 @@
 		            &::before {
 		                height: 16px;
 		                width: 16px;
+
+		                image-rendering: pixelated;
 		            }
 
 		            &.tegaki-plus::before {
